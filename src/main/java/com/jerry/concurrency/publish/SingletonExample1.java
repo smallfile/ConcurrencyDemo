@@ -19,6 +19,7 @@ public class SingletonExample1 {
 
     // 静态的工厂方法
     public static SingletonExample1 getInstance() {
+        // 当有多个线程同时访问时，在此处就有可能出现创建多个对象的情况
         if (instance == null) {
             instance = new SingletonExample1();
         }

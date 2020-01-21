@@ -21,4 +21,5 @@ public class SingletonExample2 {
     public static SingletonExample2 getInstance() {
         return instance;
     }
+
 }
