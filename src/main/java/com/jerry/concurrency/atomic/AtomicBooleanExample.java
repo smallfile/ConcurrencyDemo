@@ -1,17 +1,24 @@
-package com.jerry.concurrency;
+package com.jerry.concurrency.atomic;
 
-import com.jerry.concurrency.annoations.UnThreadSafe;
+import com.jerry.concurrency.annoations.ThreadSafe;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.LongAdder;
 
-@UnThreadSafe
-public class ConcurrencyTest {
+/**
+ *  实例
+ *  AtomicBoolean isHappened = new AtomicBoolean(false);
+ */
+@ThreadSafe
+public class AtomicBooleanExample {
 
     public static int clientTotal = 5000;    // 请求总数
     public static int threadTotal = 200;     // 同时并发执行的线程数
-    public static int count = 0;             // 计数
+    private static AtomicBoolean isHappened = new AtomicBoolean(false);
 
     public static void main(String[] args) throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();   //线程池
@@ -21,7 +28,7 @@ public class ConcurrencyTest {
             executorService.execute(() -> {
                 try {
                     semaphore.acquire();
-                    add();
+                    test();
                     semaphore.release();
                 } catch (Exception e) {
                     System.out.println("exception");
@@ -31,10 +38,12 @@ public class ConcurrencyTest {
         }
         countDownLatch.await();
         executorService.shutdown();     //关闭线程池
-        System.out.println("当计数器减为0时，count的值:"+count);
+        System.out.println("当计数器减为0时，isHappened的值:"+isHappened);
     }
 
-    private static void add() {
-        count++;
+    private static void test() {
+        if (isHappened.compareAndSet(false, true)) {
+            System.out.println("execute");
+        }
     }
 }

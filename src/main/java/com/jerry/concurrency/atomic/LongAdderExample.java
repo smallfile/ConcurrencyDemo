@@ -1,17 +1,24 @@
-package com.jerry.concurrency;
+package com.jerry.concurrency.atomic;
 
-import com.jerry.concurrency.annoations.UnThreadSafe;
+import com.jerry.concurrency.annoations.ThreadSafe;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
 
-@UnThreadSafe
-public class ConcurrencyTest {
+/**
+ *  实例
+ *  public static LongAdder count = new LongAdder();
+ */
+@ThreadSafe
+public class LongAdderExample {
 
     public static int clientTotal = 5000;    // 请求总数
     public static int threadTotal = 200;     // 同时并发执行的线程数
-    public static int count = 0;             // 计数
+    public static LongAdder count = new LongAdder();     // 计数
 
     public static void main(String[] args) throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();   //线程池
@@ -35,6 +42,6 @@ public class ConcurrencyTest {
     }
 
     private static void add() {
-        count++;
+        count.increment();
     }
 }

@@ -1,13 +1,18 @@
-package com.jerry.concurrency;
+package com.jerry.concurrency.count;
 
 import com.jerry.concurrency.annoations.UnThreadSafe;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+/**
+ *  实例
+ *  public static int count = 0;
+ */
 @UnThreadSafe
-public class ConcurrencyTest {
+public class IntExample {
 
     public static int clientTotal = 5000;    // 请求总数
     public static int threadTotal = 200;     // 同时并发执行的线程数

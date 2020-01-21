@@ -1,17 +1,24 @@
-package com.jerry.concurrency;
+package com.jerry.concurrency.atomic;
 
-import com.jerry.concurrency.annoations.UnThreadSafe;
+import com.jerry.concurrency.annoations.ThreadSafe;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
-@UnThreadSafe
-public class ConcurrencyTest {
+/**
+ *  实例
+ *  public static AtomicLong count = new AtomicLong(0);
+ */
+@ThreadSafe
+public class AtomicLongExample {
 
     public static int clientTotal = 5000;    // 请求总数
     public static int threadTotal = 200;     // 同时并发执行的线程数
-    public static int count = 0;             // 计数
+    public static AtomicLong count = new AtomicLong(0);     // 计数
 
     public static void main(String[] args) throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();   //线程池
@@ -35,6 +42,7 @@ public class ConcurrencyTest {
     }
 
     private static void add() {
-        count++;
+        count.incrementAndGet();   //相当于 ++i
+        // count.getAndIncrement();    //相当于 i++
     }
 }
