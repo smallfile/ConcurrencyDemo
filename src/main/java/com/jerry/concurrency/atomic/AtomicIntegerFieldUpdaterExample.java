@@ -20,11 +20,11 @@ public class AtomicIntegerFieldUpdaterExample {
 
         AtomicIntegerFieldUpdaterExample example5 = new AtomicIntegerFieldUpdaterExample();
 
-        if (updater.compareAndSet(example5, 100, 120)) {
+        if (updater.compareAndSet(example5, 100, 120)) {    //true
             System.out.println("update success 1, {}" + example5.getCount());
         }
 
-        if (updater.compareAndSet(example5, 100, 120)) {
+        if (updater.compareAndSet(example5, 100, 120)) {   //false
             System.out.println("update success 2, {}" + example5.getCount());
         } else {
             System.out.println("update failed, {}" + example5.getCount());
